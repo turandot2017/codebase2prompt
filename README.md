@@ -42,7 +42,7 @@
 
 ### 方式一：下载预编译的可执行文件（推荐）
 
-从 [Releases](https://github.com/YOUR_USERNAME/YOUR_REPO/releases) 页面下载最新版本：
+从 [Releases](https://github.com/turandot2017/codebase2prompt/releases) 页面下载最新版本：
 
 - **Windows**: `codebase2prompt-windows.exe`
 - **Linux**: `codebase2prompt-linux`
@@ -80,8 +80,8 @@ chmod +x codebase2prompt-macos
 
 1. **克隆或下载项目**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
-   cd codebase2prompt_tool
+   git clone https://github.com/turandot2017/codebase2prompt.git
+   cd codebase2prompt
    ```
 
 2. **安装依赖**
