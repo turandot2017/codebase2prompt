@@ -4,6 +4,9 @@ import os
 import threading
 import time  # 用于调试和性能分析
 
+# Import JSON-Repair tool window
+from json_repair_window import JsonRepairWindow
+
 # --- Configuration Constants (mirrors the JS project) ---
 # (常量部分保持不变)
 IGNORED_DIRECTORIES = {'node_modules', 'venv', '.git', '__pycache__', '.idea', '.vscode'}
@@ -88,6 +91,14 @@ class CodebaseToPromptApp(tk.Tk):
         ttk.Button(top_bar, text="Select Directory", style="Blue.TButton", command=self._on_select_directory).pack(
             side="left", padx=5)
         ttk.Button(top_bar, text="Help", command=self._show_help).pack(side="left")
+        
+        # Tools menu
+        tools_menu = tk.Menu(self, tearoff=0)
+        tools_menu.add_command(label="JSON-Repair", command=self._open_json_repair)
+        
+        tools_button = ttk.Menubutton(top_bar, text="Tools")
+        tools_button["menu"] = tools_menu
+        tools_button.pack(side="left", padx=5)
 
         ttk.Button(top_bar, text="Expand All", command=lambda: self._toggle_all(True)).pack(side="left", padx=(20, 2))
         ttk.Button(top_bar, text="Collapse All", command=lambda: self._toggle_all(False)).pack(side="left", padx=2)
@@ -141,12 +152,26 @@ class CodebaseToPromptApp(tk.Tk):
         self.status_label.pack(side="left")
 
     def _show_help(self):
-        messagebox.showinfo("Help", "1. Click 'Select Directory' to choose your project folder.\n"
-                                    "2. Check/uncheck files and directories on the left.\n"
-                                    "3. The generated prompt text will appear on the right.\n"
-                                    "4. Click 'Copy to Clipboard' to copy the text.\n\n"
-                                    "This tool helps you create a single text block from your codebase, "
-                                    "perfect for pasting into Large Language Models (LLMs) like GPT or Claude.")
+        help_text = (
+            "1. Click 'Select Directory' to choose your project folder.\n"
+            "2. Check/uncheck files and directories on the left.\n"
+            "3. The generated prompt text will appear on the right.\n"
+            "4. Click 'Copy to Clipboard' to copy the text.\n\n"
+            "This tool helps you create a single text block from your codebase, "
+            "perfect for pasting into Large Language Models (LLMs) like GPT or Claude.\n\n"
+            "Author: Tianhc, tianhc@126.com\n"
+            "─────────────────────────────────────\n"
+            "Version History:\n"
+            "• v1.0: Windows version of CodebaseToPrompt\n"
+            "        (inspired by hello-nerdo/CodebaseToPrompt)\n"
+            "• v1.1: Added JSON-Repair utility tool for extracting\n"
+            "        and fixing JSON from LLM responses"
+        )
+        messagebox.showinfo("Help", help_text)
+
+    def _open_json_repair(self):
+        """Open JSON-Repair tool window"""
+        JsonRepairWindow(self)
 
     # --- Event Handlers and Core Logic ---
 
